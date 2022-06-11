@@ -1,31 +1,41 @@
+<!--
+ * @Author: SUN
+ * @Date: 2022-06-11 10:49:22
+ * @LastEditors: SUN
+ * @LastEditTime: 2022-06-11 11:23:47
+ * @FilePath: \vue-interview\src\components\MultiCheck.vue
+-->
 <template>
-    <div>@todo</div>
+  <div v-for="item in options" :key="item.id">
+    <label>
+      <span style="font-size: 20px">{{ item.label }}:</span>
+      <input
+        type="checkbox"
+        :checked="item.checked"
+        @change="hanldeChange(item.id)"
+      />
+    </label>
+  </div>
+  <br /><br />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { defineEmits, defineProps, PropType } from "vue";
 
 export type Option = {
-	label: string;
-	value: string;
+  id: number;
+  label: string;
+  value: string;
+  checked: boolean;
 };
-
-/**
- * Notice:
- * 1. There should be a special `Select All` option with checkbox to control all passing options
- * 2. If columns > 1, the options should be placed from top to bottom in each column
- *
- * @param {string} label - the label text of this component
- * @param {Option[]} options - options
- * @param {string[]} values - default checked option values
- * @param {number} columns - default value is 1
- * @param {Function} onChange - when checked options are changed,
- *                             they should be passed to outside
- */
-
-export default defineComponent({
-  name: 'MultiCheck',
+defineProps({
+  options: Array as PropType<Array<Option>>,
 });
+const emits = defineEmits(["handleChecked"]);
+
+const hanldeChange = (id: number) => {
+  emits("handleChecked", id);
+};
 </script>
 
 <style scoped lang="less">
