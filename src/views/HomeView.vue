@@ -1,6 +1,6 @@
 <template>
   <h1>Multi Check Component</h1>
-  <MultiCheck />
+  <MultiCheck :number="2" :options="options" label="selected" :values="defaultSelectedValues" @onChange="onChange"/>
   <div>
     <h2>Current selected values:</h2>
     <div>{{ selectedValues.join(",") }}</div>
@@ -18,6 +18,7 @@ export default defineComponent({
   },
   data() {
     return {
+      defaultSelectedValues: ['111'],
       options: [
         { label: "aaa", value: "111" },
         { label: "bbb", value: "222" },
@@ -32,5 +33,10 @@ export default defineComponent({
       selectedValues: [] as string[],
     };
   },
+  methods: {
+    onChange (selects: Array<string>) {
+      this.selectedValues = selects
+    }
+  }
 });
 </script>
